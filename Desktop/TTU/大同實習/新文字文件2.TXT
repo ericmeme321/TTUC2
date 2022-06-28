@@ -1,0 +1,46 @@
+名稱:	vEthernet (Default Switch)
+描述:	Hyper-V Virtual Ethernet Adapter
+實體位址 (MAC):	00:15:5d:35:32:6f
+狀態:	可運作
+傳輸單元最大值:	1500
+IPv4 位址:	192.168.90.225/28
+IPv6 位址:	fe80::98d8:a4c0:bdaa:f2bb%17/64
+DNS 伺服器:	fec0:0:0:ffff::1%1, fec0:0:0:ffff::2%1, fec0:0:0:ffff::3%1
+連線能力 (IPv4/IPv6):	已中斷連線
+	                                   
+	                                   
+名稱:	乙太網路
+描述:	Intel(R) Ethernet Connection (7) I219-LM
+實體位址 (MAC):	18:31:bf:93:5b:0f
+狀態:	可運作
+傳輸單元最大值:	1500
+連結速度 (接收/傳輸):	100/100 (Mbps)
+DHCP 已啟用:	是
+DHCP 伺服器:	139.223.41.121
+已取得 DHCP 租約:	‎2020‎年‎8‎月‎27‎日 上午 09:22:24
+DHCP 租約過期:	‎2020‎年‎8‎月‎31‎日 上午 09:22:24
+IPv4 位址:	139.223.41.133/24
+IPv6 位址:	fd01::b85:1396:8af2:2ed9/128, fe80::c1ed:8997:6e88:5d8a%15/64
+預設閘道:	139.223.41.1
+DNS 伺服器:	139.223.2.16, 139.223.2.136
+DNS 網域名稱:	nebu.tatung.com.tw
+DNS 連線尾碼:	nebu.tatung.com.tw
+DNS 搜尋尾碼清單:	
+網路名稱:	網路
+網路類別:	私人
+連線能力 (IPv4/IPv6):	已連線到 網際網路 / 已連線到 未知的網路
+IPv6 位址:	fd01::b85:1396:8af2:2ed9
+連結-本機 IPv6 位址:	fe80::c1ed:8997:6e88:5d8a%15
+IPv4 位址:	139.223.41.133
+IPv4 DNS 伺服器:	139.223.2.16
+139.223.2.136
+主要 DNS 尾碼:	nebu.tatung.com.tw
+製造商:	Intel
+描述:	Intel(R) Ethernet Connection (7) I219-LM
+驅動程式版本:	12.18.9.11
+實體位址 (MAC):	18-31-BF-93-5B-0F
+
+
+
+	                                   
+	                                   

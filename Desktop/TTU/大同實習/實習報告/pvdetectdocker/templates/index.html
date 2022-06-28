@@ -1,0 +1,167 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>{{title}}</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://raw.githack.com/rubo77/table2CSV/master/table2CSV.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        table {
+            text-align: left;
+            position: relative;
+            border-collapse: collapse; 
+        }
+        th {
+            background: white;
+            position: sticky;
+            top: 0; /* Don't forget this, required for the stickiness */
+            box-shadow: 0 0px 2px -1px rgba(0, 0, 0, 0.4);
+        }
+
+        #myBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: black; /* Set a background color */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 15px; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow text-white">
+        <a class="navbar-brand col-sm-1 mr-auto" href="/">GW Data</a>
+        
+        <h6>查詢日期</h6>&nbsp;&nbsp;
+        <form class="needs-validation" method="POST" action="/index/" novalidate>
+            {% csrf_token %}
+            <input type="date" id="begin_date" name="begin_date" value="{{ recordDay }}" min="2020-07-17" max="{{ today_for_html }}">&nbsp;&nbsp;
+            {% if yesterday %}
+                <input type="checkbox" id="multiple" name="multiple" value="multiple" checked>前一天&nbsp;&nbsp;
+            {% else %}
+                <input type="checkbox" id="multiple" name="multiple" value="multiple">前一天&nbsp;&nbsp;
+            {% endif %}
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('submitBtn').click()">查詢</button>&nbsp;&nbsp;
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitBtn" hidden>Continue to checkout</button>
+        </form>
+        
+        <a class="btn btn-outline-primary" id="CSV">下載csv檔</a>
+        
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link " href="/accounts/logout">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="text-center">
+            <table class="table table-bordered" id="table" data-toggle="table" style="width:100%;word-break:keep-all;">
+                <thead class="thead-light">
+                    <tr>
+                    {% for item in selectItem %}
+                        <th scope="col">{{ item }}</th>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                
+                <tbody>
+                {% for id in output %}     
+                    <tr name="{{ id.1 }}" style="display: ''">
+                    {% for c in id %}
+                        <td name="{{ c }}" scope="col">{{ c }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    </div>
+    
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    
+    <script>    
+        $('table').each(function () {
+            var $table = $(this);
+
+            var $button = $("#CSV");
+            $button.click(function () {
+                var universalBOM = "\uFEFF";
+                // 中文編碼
+                var csv = $table.table2CSV({
+                    delivery: 'value'
+                });
+
+                var link = window.document.createElement("a");
+                // link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(universalBOM+csv);
+                // link.target = '_blank';
+                // lick.download = 'people.csv';
+                // lick.click();
+                link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(universalBOM+csv));
+                text = {{ filename }} + ".csv"
+                link.setAttribute("download", text);
+                link.click();
+                //window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(universalBOM+csv);
+            });
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            $("td[name=None]").html("");
+            $('td[name="1"]').css("background-color", "yellow");
+            $('td[name="2"]').css("background-color", "yellow");
+            $('td[name="4"]').css("background-color", "yellow");
+            $('td[name="5"]').css("background-color", "red");
+        })
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+</body>
+</html>
